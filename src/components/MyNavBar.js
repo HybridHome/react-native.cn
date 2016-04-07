@@ -22,7 +22,7 @@ const linksInternal = [
   { section: 'blog', href: '/blog.html', text: '博客' },
   { section: 'videos', href: '/videos.html', text: '视频' },
   { section: 'bbs', href: 'http://bbs.reactnative.cn/', text: '讨论', hot: true, newTab: false },
-  { section: 'gztechparty', hot: true, href: 'http://bbs.reactnative.cn/topic/634', text: '广州Techparty', newTab: true },
+  { section: 'update', hot: true, href: 'http://update.reactnative.cn', text: '热更新', newTab: true },
   // { section: 'pushy', hot: true, href: '', text: '热更新内测', newTab: true, isHidden: () => {
   //   const regex = /baidu.com/;
   //   if (__SERVER__) {
