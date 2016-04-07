@@ -22,7 +22,7 @@ const linksInternal = [
   { section: 'blog', href: '/blog.html', text: '博客' },
   { section: 'videos', href: '/videos.html', text: '视频' },
   { section: 'bbs', href: 'http://bbs.reactnative.cn/', text: '讨论', hot: true, newTab: false },
-  { section: 'shfx', hot: true, href: 'http://bbs.reactnative.cn/topic/509', text: '3.19上海分享会', newTab: true },
+  { section: 'gztechparty', hot: true, href: 'http://bbs.reactnative.cn/topic/634', text: '广州Techparty', newTab: true },
   // { section: 'pushy', hot: true, href: '', text: '热更新内测', newTab: true, isHidden: () => {
   //   const regex = /baidu.com/;
   //   if (__SERVER__) {
@@ -94,7 +94,8 @@ class MyNavBar extends React.Component {
             </Navbar.Brand>
             <NavDropdown
               className="nav-version"
-              title={ this.props.params.version || versions.current } id="nav_version"
+              title={ this.props.params.version || versions.current }
+              id="nav_version"
             >
               <MenuItem onSelect={this.goToReleaseNote}>
                 更新日志

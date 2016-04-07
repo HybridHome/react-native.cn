@@ -28,20 +28,38 @@ const server = new http.Server(app);
 
 // import getDataDependencies from './helpers/getDataDependencies';
 import storage from './storage/storage';
+import { objectToQueryString } from './helpers/paramsHelper';
 
-app.use('/proxy/bbs/api/category', (req, res) => {
-  storage.load({
-    key: 'blogList'
-  }).then(blogList => {
-    res.json(blogList);
-  });
+app.use('/proxy/bbs/api/category/1', (req, res) => {
+  if (req.query) {
+    storage.sync.newsList({
+      query: objectToQueryString(req.query),
+      resolve: newsList => res.json(newsList),
+    });
+  } else {
+    storage.load({
+      key: 'newsList',
+    }).then(newsList => res.json(newsList));
+  }
+});
+app.use('/proxy/bbs/api/category/3', (req, res) => {
+  if (req.query) {
+    storage.sync.blogList({
+      query: objectToQueryString(req.query),
+      resolve: blogList => res.json(blogList),
+    });
+  } else {
+    storage.load({
+      key: 'blogList',
+    }).then(blogList => res.json(blogList));
+  }
 });
 app.use('/proxy/bbs/api/topic', (req, res) => {
   storage.load({
-    key: 'blog',
-    id: decodeURIComponent(req.path.substr(1, req.path.length - 1))
-  }).then(blog => {
-    res.json(blog);
+    key: 'post',
+    id: req.path.substr(1, req.path.length - 1)
+  }).then(post => {
+    res.json(post);
   });
 });
 app.use('/proxy/videos', (req, res) => {
@@ -84,8 +102,8 @@ app.use((req, res) => {
   const store = createStore(reduxReactRouter, getRoutes, createHistory);
 
   function hydrateOnClient() {
-    res.send('<!doctype html>\n' +
-      ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store}/>));
+    res.send(`<!doctype html>\n
+      ${ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store} />)}`);
   }
   if (!options.enableSSR) {
     hydrateOnClient();
@@ -94,22 +112,23 @@ app.use((req, res) => {
 
   function sendRendered(routerState) {
     const redirect = getRedirectFromRoutes(routerState.routes, routerState.params);
-    if (redirect){
+    if (redirect) {
       res.redirect(redirect);
       return;
     }
     const component = (
       <Provider store={store} key="provider">
-        <ReduxRouter/>
+        <ReduxRouter />
       </Provider>
     );
     const status = getStatusFromRoutes(routerState.routes);
     if (status) {
       res.status(status);
     }
-    res.send('<!doctype html>\n' +
-      ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component}
-                                    store={store}/>));
+    res.send(`<!doctype html>\n
+      ${ReactDOM.renderToString(
+      <Html assets={webpackIsomorphicTools.assets()} component={component} store={store} />
+      )}`);
   }
   store.dispatch(match(req.originalUrl, (error, redirectLocation, routerState) => {
     if (redirectLocation) {
