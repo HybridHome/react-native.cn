@@ -6,6 +6,7 @@
     { "version": "0.22", "text": "0.22" },
     { "version": "0.23", "text": "0.23" },
     { "version": "0.24", "text": "0.24(当前版本)", "current": true },
+    { "version": "0.25", "text": "0.25" },
     { "version": "next", "text": "未来版本" }
   ]
 }
