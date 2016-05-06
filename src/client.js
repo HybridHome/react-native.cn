@@ -16,7 +16,6 @@ import { reduxReactRouter, ReduxRouter } from 'redux-router';
 import getRoutes from './routes';
 import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
 
-
 // Three different types of scroll behavior available.
 // Documented here: https://github.com/rackt/scroll-behavior
 const scrollablehistory = useScroll(createHistory);
